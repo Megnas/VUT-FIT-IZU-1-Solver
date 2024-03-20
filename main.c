@@ -144,11 +144,11 @@ void find_path(NodeArray *arr, Pos start, Pos finish, bool showDebug) {
         else if (x == finish.x && y == finish.y) // FINISH
           printf("\033[0;41m %d \033[0m", val);
         else if (node_set_contains(open, arrIndex)) // OPEN
-          printf("\033[0;44m %d \033[0m", val);
+          printf("\033[0;44m\x1b[30m %d \033[0m", val);
         else if (node_set_contains(closed, arrIndex)) // CLOSED
-          printf("\033[0;45m %d \033[0m", val);
+          printf("\033[0;45m\x1b[30m %d \033[0m", val);
         else // JUST VALUE
-          printf(" %d ", val);
+          printf("\x1b[47m\x1b[30m %d \x1b[0m", val);
       }
       printf("\n");
     }
@@ -178,14 +178,14 @@ void find_path(NodeArray *arr, Pos start, Pos finish, bool showDebug) {
         printf("\033[0;42m %d \033[0m", val);
       else if (x == finish.x && y == finish.y) // FINISH
         printf("\033[0;41m %d \033[0m", val);
-      else if (isPartOfPath(arr, finish, (Pos){x, y}))
-        printf("\033[0;43m %d \033[0m", val);
+      else if (isPartOfPath(arr, finish, (Pos){x, y})) // PATH
+        printf("\033[0;43m\x1b[30m %d \033[0m", val);
       else if (node_set_contains(open, arrIndex)) // OPEN
-        printf("\033[0;44m %d \033[0m", val);
+        printf("\033[0;44m\x1b[30m %d \033[0m", val);
       else if (node_set_contains(closed, arrIndex)) // CLOSED
-        printf("\033[0;45m %d \033[0m", val);
+        printf("\033[0;45m\x1b[30m %d \033[0m", val);
       else // JUST VALUE
-        printf(" %d ", val);
+        printf("\x1b[47m\x1b[30m %d \x1b[0m", val);
     }
     printf("\n");
   }
@@ -228,7 +228,21 @@ int main(int argc, char *argv[]) {
   NodeArray *arr = ParseInput(xSize, ySize);
 
   printf("Inputed array: \n");
-  print_array(arr);
+  for (int y = 0; y < ARR_HEIGHT(arr); y++) {
+    for (int x = 0; x < ARR_WIDTH(arr); x++) {
+      int val = ARR_GET_VALUE(arr, x, y).cost;
+      int arrIndex = ARR_GET_INDEX(arr, x, y);
+      if (val == 0) // WALL
+        printf("\033[0;40m Z \033[0m");
+      else if (x == start.x && y == start.y) // START
+        printf("\033[0;42m %d \033[0m", val);
+      else if (x == finish.x && y == finish.y) // FINISH
+        printf("\033[0;41m %d \033[0m", val);
+      else // JUST VALUE
+        printf("\x1b[47m\x1b[30m %d \x1b[0m", val);
+    }
+    printf("\n");
+  }
 
   find_path(arr, start, finish, showDebug);
 
