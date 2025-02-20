@@ -59,3 +59,11 @@ Output:
 ![Screenshot of 6th iteration](/img/mid.png)
 ### End of program
 ![Screenshot of a found path](/img/end.png)
+### Color explanation
+- White  = nodes to explore
+- Black  = impassable nodes
+- Green  = starting node
+- Red    = finish node
+- Blue   = nodes in open set
+- Purple = nodes in close set
+- Orange = path
