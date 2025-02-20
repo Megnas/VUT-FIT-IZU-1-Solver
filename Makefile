@@ -2,19 +2,20 @@ CC=gcc
 PROG=prog
 MODULES=2dField nodeSet
 OBJS=$(addsuffix .o, $(MODULES))
+TABLE_PTH=data/TABLE
 
 .PHONY: all run clean vlg
 
-all: run
+all: $(PROG)
 
 vlg: $(PROG)
-	valgrind ./$(PROG) < TABLE
+	valgrind ./$(PROG) < $(TABLE_PTH)
 
 deb: $(PROG)
-	./$(PROG) < TABLE -d
+	./$(PROG) < $(TABLE_PTH) -d
 
 run: $(PROG)
-	./$(PROG) < TABLE
+	./$(PROG) < $(TABLE_PTH)
 
 $(PROG): main.c $(OBJS)
 	$(CC) $^ -o $(PROG)
