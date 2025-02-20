@@ -53,3 +53,9 @@ Table content:
 8 8 6 7 0 9 9 9 9 9
 ```
 Output:
+### Start of program
+![Screenshot of a loaded table](/img/start.png)
+### Middle of program (6th iteration)
+![Screenshot of 6th iteration](/img/mid.png)
+### End of program
+![Screenshot of a found path](/img/end.png)
